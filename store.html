@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+  <title>חנות בסיסית</title>
+  <style>
+    /* סגנון עבור מוצר */
+    .product {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    /* סגנון עבור תמונת מוצר */
+    .product img {
+      max-width: 100px;
+      max-height: 100px;
+    }
+    
+    /* סגנון עבור מוצר במבצע */
+    .product.on-sale {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>החנות שלי</h1>
+  <div id="products"></div>
+  <h2>עגלת קניות</h2>
+  <ul id="cart"></ul>
+
+  <script>
+    // מערך המוצרים
+    // מכיל אובייקטים עם פרטי המוצרים: שם, מחיר, תיאור, תמונה והאם במבצע
+    const products = [
+      { name: 'מוצר 1', price: 10, description: 'תיאור של מוצר 1', image: 'product1.webp', onSale: true },
+      { name: 'מוצר 2', price: 20, description: 'תיאור של מוצר 2', image: 'product2.webp', onSale: false },
+      { name: 'מוצר 3', price: 15, description: 'תיאור של מוצר 3', image: 'product3.webp', onSale: true }
+    ];
+
+    // מערך עגלת הקניות
+    // מכיל את המוצרים שנוספו לעגלת הקניות
+    const cart = [];
+
+    // פונקציה להצגת המוצרים
+    function displayProducts() {
+      const productsContainer = document.getElementById('products');
+      productsContainer.innerHTML = '';
+
+      // לולאה שעוברת על כל המוצרים במערך
+      products.forEach((product, index) => {
+        // יצירת אלמנט div עבור כל מוצר
+        const productElement = document.createElement('div');
+        productElement.classList.add('product');
+        
+        // הוספת מחלקה 'on-sale' אם המוצר נמצא במבצע
+        if (product.onSale) {
+          productElement.classList.add('on-sale');
+        }
+
+        // הוספת תוכן HTML לאלמנט המוצר
+        productElement.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>מחיר: ${product.price} ש"ח</p>
+          <p>${product.description}</p>
+          <button onclick="addToCart(${index})">הוסף לעגלה</button>
+        `;
+
+        // הוספת אלמנט המוצר למיכל המוצרים בדף
+        productsContainer.appendChild(productElement);
+      });
+    }
+
+    // פונקציה להוספת מוצר לעגלת הקניות
+    function addToCart(productIndex) {
+      // קבלת המוצר על סמך האינדקס שלו במערך המוצרים
+      const product = products[productIndex];
+      
+      // הוספת המוצר למערך עגלת הקניות
+      cart.push(product);
+      
+      // עדכון תצוגת עגלת הקניות
+      displayCart();
+    }
+
+    // פונקציה להצגת עגלת הקניות
+    function displayCart() {
+      const cartContainer = document.getElementById('cart');
+      cartContainer.innerHTML = '';
+
+      // לולאה שעוברת על כל המוצרים בעגלת הקניות
+      cart.forEach(product => {
+        // יצירת אלמנט li עבור כל מוצר בעגלה
+        const listItem = document.createElement('li');
+        
+        // הוספת שם המוצר ומחירו לאלמנט li
+        listItem.textContent = `${product.name} - ${product.price} ש"ח`;
+        
+        // הוספת אלמנט ה-li לרשימת עגלת הקניות בדף
+        cartContainer.appendChild(listItem);
+      });
+    }
+
+    // קריאה לפונקציה להצגת המוצרים בעת טעינת הדף
+    displayProducts();
+  </script>
+</body>
+</html>
