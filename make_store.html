@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חנות בסיסית</title>
+</head>
+
+<body>
+
+    <h1>החנות שלי</h1>
+
+    <div id="products">כאן יופיע המוצרים</div>
+
+    <h2>עגלת קניות</h2>
+    <ul id="cart"></ul>
+
+    <script>
+        // מערך המוצרים
+        // מכיל אובייקטים עם פרטי המוצרים: שם, מחיר, תיאור, תמונה והאם במבצע
+        const products = [
+            {
+                name: 'כדוררגל צהוב אירופה',
+                price: 50,
+                description: 'הכדור הטוב ביותר באירופה מגיע לישראל. איכותי עם ציורים של חתולים חומריים ואורנים, ניתן להשתמש בו בכל דרך',
+                image: 'product1.webp',
+                onSale: true
+            },
+
+            {
+                name: "משאבה לכדור",
+                price: 90,
+                description: "משאבה מיוחדת שבאה עם ציונור מיוחד בהפעלה אוטומטית",
+                image: "product2.webp",
+                onSale: true
+            },
+
+            {
+                name: "בקבוק מים",
+                price: 32.4,
+                description: "בקבוק מים עשוי פלסטיק ושומר על קור המים",
+                image: "product3.webp",
+                onSale: true
+            }
+        ];
+
+        // מערך עגלת הקניות
+        // מכיל את המוצרים שנוספו לעגלת הקניות
+        const cart = [];
+
+        // פונקציה להצגת המוצרים
+    function displayProducts() {
+      const productsContainer = document.getElementById('products');
+      productsContainer.innerHTML = '';
+
+      // לולאה שעוברת על כל המוצרים במערך
+      products.forEach((product, index) => {
+        // יצירת אלמנט div עבור כל מוצר
+        const productElement = document.createElement('div');
+        productElement.classList.add('product');
+        
+        // הוספת מחלקה 'on-sale' אם המוצר נמצא במבצע
+        if (product.onSale) {
+          productElement.classList.add('on-sale');
+        }
+
+        // הוספת תוכן HTML לאלמנט המוצר
+        productElement.innerHTML = `
+          <img src="${product.image}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <p>מחיר: ${product.price} ש"ח</p>
+          <p>${product.description}</p>
+          <button onclick="addToCart(${index})">הוסף לעגלה</button>
+        `;
+
+        // הוספת אלמנט המוצר למיכל המוצרים בדף
+        productsContainer.appendChild(productElement);
+      });
+    }
+
+    displayProducts()
+
+
+
+    </script>
+</body>
+
+</html>
